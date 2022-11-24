@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+// User Model
+//@@map() change name of table or columun
+model User {
+  id          Int      @id @default(autoincrement())
+  uuid        String   @unique @default(uuid())
+  firstName   String  @db.VarChar(255)
+  lastName    String  @db.VarChar(255)
+  email       String   @unique @db.VarChar(255)
+  password    String   @unique @db.VarChar(255)
+  role        Role     @default(USER)
+  
+   @@map(name: "users")
+}
+enum Role {
+  USER
+  ADMIN
+}
